@@ -40,7 +40,7 @@ cp -a "$ROOT_DIR/client/." "$PI_GEN_DIR/stage-rpi-phone/files/opt/rpi-phone/clie
 mkdir -p "$OUTPUT_DIR"
 
 if dpkg-query -W -f='${Status}' qemu-user-binfmt 2>/dev/null | grep -q 'install ok installed'; then
-    sed -i 's/^qemu-user-static$/qemu-user-binfmt/' "$PI_GEN_DIR/depends"
+    sed -i 's/^qemu-arm-static:qemu-user-static$/qemu-arm-static:qemu-user-binfmt/' "$PI_GEN_DIR/depends"
 fi
 
 cat > "$PI_GEN_DIR/config" <<CONFIG
