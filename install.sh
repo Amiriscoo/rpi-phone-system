@@ -14,7 +14,7 @@ if ! command -v sudo >/dev/null 2>&1; then
 fi
 
 sudo apt-get update
-if apt-cache show qemu-user-static >/dev/null 2>&1; then
+if apt-cache show qemu-user-static 2>/dev/null | grep -q '^Package: qemu-user-static$'; then
     QEMU_PACKAGE="qemu-user-static"
 else
     QEMU_PACKAGE="qemu-user-binfmt"
