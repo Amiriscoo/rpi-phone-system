@@ -14,11 +14,11 @@ if ! command -v sudo >/dev/null 2>&1; then
 fi
 
 sudo apt-get update
-QEMU_STATIC_CANDIDATE="$(apt-cache policy qemu-user-static 2>/dev/null | awk '/Candidate:/ { print $2; exit }')"
-if [[ -n "$QEMU_STATIC_CANDIDATE" && "$QEMU_STATIC_CANDIDATE" != "(none)" ]]; then
-    QEMU_PACKAGE="qemu-user-static"
-else
+QEMU_BINFMT_CANDIDATE="$(apt-cache policy qemu-user-binfmt 2>/dev/null | awk '/Candidate:/ { print $2; exit }')"
+if [[ -n "$QEMU_BINFMT_CANDIDATE" && "$QEMU_BINFMT_CANDIDATE" != "(none)" ]]; then
     QEMU_PACKAGE="qemu-user-binfmt"
+else
+    QEMU_PACKAGE="qemu-user-static"
 fi
 
 if [[ "$QEMU_PACKAGE" != "qemu-user-static" ]]; then
