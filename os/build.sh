@@ -32,8 +32,8 @@ else
     git -C "$PI_GEN_DIR" checkout -q -B bookworm FETCH_HEAD
 fi
 
-rm -rf "$PI_GEN_DIR/stage-rpi-phone"
-rm -rf "$PI_GEN_DIR/work" "$PI_GEN_DIR/deploy"
+sudo rm -rf "$PI_GEN_DIR/stage-rpi-phone"
+sudo rm -rf "$PI_GEN_DIR/work" "$PI_GEN_DIR/deploy"
 cp -a "$ROOT_DIR/os/stage-rpi-phone" "$PI_GEN_DIR/stage-rpi-phone"
 mkdir -p "$PI_GEN_DIR/stage-rpi-phone/files/opt/rpi-phone/client"
 cp -a "$ROOT_DIR/client/." "$PI_GEN_DIR/stage-rpi-phone/files/opt/rpi-phone/client/"
