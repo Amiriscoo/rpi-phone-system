@@ -12,7 +12,7 @@ cd rpi-phone-system
 bash install.sh
 ```
 
-The Windows equivalent is `powershell -ExecutionPolicy Bypass -File .\install.ps1`; it runs the same build inside WSL2. The installer automatically selects `qemu-user-static` or the newer Ubuntu package name `qemu-user-binfmt`.
+The Windows equivalent is `powershell -ExecutionPolicy Bypass -File .\install.ps1`; it runs the same build inside WSL2. The installer automatically selects `qemu-user-static` or the newer Ubuntu package name `qemu-user-binfmt`, and installs the additional `pigz` and `arch-test` dependencies required by current `pi-gen`.
 
 The first build downloads `pi-gen` and can take a while. The image is written to `os/images`. Flash the generated `.img` file with Raspberry Pi Imager or Raspberry Pi Etcher.
 
