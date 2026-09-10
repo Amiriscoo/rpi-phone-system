@@ -20,9 +20,10 @@ if [[ -n "$QEMU_BINFMT_CANDIDATE" && "$QEMU_BINFMT_CANDIDATE" != "(none)" ]]; th
 else
     QEMU_PACKAGE="qemu-user-static"
 fi
+echo "Using QEMU provider: $QEMU_PACKAGE"
 
 if [[ "$QEMU_PACKAGE" != "qemu-user-static" ]]; then
-    sudo dpkg --purge qemu-user-static >/dev/null 2>&1 || true
+    sudo dpkg --purge --force-all qemu-user-static >/dev/null 2>&1 || true
 fi
 
 sudo apt-get install -y git coreutils quilt parted "$QEMU_PACKAGE" debootstrap zerofree zip dosfstools libarchive-tools libcap2-bin rsync xz-utils kmod bc pigz arch-test
