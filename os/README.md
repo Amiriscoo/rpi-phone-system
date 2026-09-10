@@ -7,11 +7,12 @@ This directory builds a custom Raspberry Pi Linux image using `pi-gen`. It is a 
 Build on Ubuntu/Debian, WSL2, or a Linux VM. Do not run this directly in Windows PowerShell.
 
 ```bash
-sudo apt update
-sudo apt install -y git coreutils quilt parted qemu-user-static debootstrap zerofree zip dosfstools libarchive-tools libcap2-bin rsync xz-utils kmod bc
-cd rpi_phone_system
-bash os/build.sh
+git clone https://github.com/Amiriscoo/rpi-phone-system.git
+cd rpi-phone-system
+bash install.sh
 ```
+
+The Windows equivalent is `powershell -ExecutionPolicy Bypass -File .\install.ps1`; it runs the same build inside WSL2.
 
 The first build downloads `pi-gen` and can take a while. The image is written to `os/images`. Flash the generated `.img` file with Raspberry Pi Imager or Raspberry Pi Etcher.
 

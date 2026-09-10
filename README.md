@@ -16,6 +16,28 @@ Optional SIP/WebRTC service and optional PSTN provider
 
 This project is intentionally Wi-Fi-only. Wi-Fi does not provide a cellular number. The included system supports authenticated users, messaging, contacts, device registration, presence-ready WebSocket notifications, local/offline UI, and a call screen. Audio calls need a media service: use WebRTC (recommended for device-to-device calls) or a SIP client/server. Phone-number calling additionally needs a SIP trunk/PSTN provider and costs may apply.
 
+## Build A Flashable OS
+
+Anyone can build a clean Pi Phone OS image from this repository. The builder asks each person for their own Pi password and does not include Wi-Fi credentials, Tailscale keys, server secrets, or account sessions.
+
+On Ubuntu, Debian, or WSL2:
+
+```bash
+git clone https://github.com/Amiriscoo/rpi-phone-system.git
+cd rpi-phone-system
+bash install.sh
+```
+
+On Windows PowerShell:
+
+```powershell
+git clone https://github.com/Amiriscoo/rpi-phone-system.git
+cd rpi-phone-system
+powershell -ExecutionPolicy Bypass -File .\install.ps1
+```
+
+The Windows installer uses WSL2 automatically. The generated image appears in `os/images`. Flash it with Raspberry Pi Imager, boot the Pi, configure Wi-Fi, set the server URL, and run `sudo tailscale up`. See [os/README.md](os/README.md) for hardware and first-boot details.
+
 ## Technology choices
 
 - **Client:** PySide6/Qt gives a modern hardware-accelerated touch UI and works well on Pi 4/5. Pi Zero 2 W can run it with a lightweight Qt image, but Pi 4 is recommended for smooth animations.
