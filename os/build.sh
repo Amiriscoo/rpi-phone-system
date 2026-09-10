@@ -29,8 +29,7 @@ if [[ ! -d "$PI_GEN_DIR" ]]; then
     git clone --depth=1 --branch bookworm https://github.com/RPi-Distro/pi-gen.git "$PI_GEN_DIR"
 else
     git -C "$PI_GEN_DIR" fetch --depth=1 origin bookworm
-    git -C "$PI_GEN_DIR" checkout -q bookworm
-    git -C "$PI_GEN_DIR" reset --hard -q origin/bookworm
+    git -C "$PI_GEN_DIR" checkout -q -B bookworm FETCH_HEAD
 fi
 
 rm -rf "$PI_GEN_DIR/stage-rpi-phone"
