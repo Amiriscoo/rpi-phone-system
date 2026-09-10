@@ -19,11 +19,12 @@ if apt-cache show qemu-user-static 2>/dev/null | grep -q '^Package: qemu-user-st
 else
     QEMU_PACKAGE="qemu-user-binfmt"
 fi
-sudo apt-get install -y git coreutils quilt parted "$QEMU_PACKAGE" debootstrap zerofree zip dosfstools libarchive-tools libcap2-bin rsync xz-utils kmod bc pigz arch-test
 
 if [[ "$QEMU_PACKAGE" != "qemu-user-static" ]]; then
     sudo dpkg --purge qemu-user-static >/dev/null 2>&1 || true
 fi
+
+sudo apt-get install -y git coreutils quilt parted "$QEMU_PACKAGE" debootstrap zerofree zip dosfstools libarchive-tools libcap2-bin rsync xz-utils kmod bc pigz arch-test
 
 
 cd "$ROOT_DIR"
