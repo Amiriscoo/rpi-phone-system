@@ -48,4 +48,4 @@ CONFIG
 
 echo "Building Pi Phone OS image. The password is supplied only to this local build."
 cd "$PI_GEN_DIR"
-./build.sh
+sudo ./build.sh
