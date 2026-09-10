@@ -14,7 +14,12 @@ if ! command -v sudo >/dev/null 2>&1; then
 fi
 
 sudo apt-get update
-sudo apt-get install -y git coreutils quilt parted qemu-user-static debootstrap zerofree zip dosfstools libarchive-tools libcap2-bin rsync xz-utils kmod bc
+if apt-cache show qemu-user-static >/dev/null 2>&1; then
+    QEMU_PACKAGE="qemu-user-static"
+else
+    QEMU_PACKAGE="qemu-user-binfmt"
+fi
+sudo apt-get install -y git coreutils quilt parted "$QEMU_PACKAGE" debootstrap zerofree zip dosfstools libarchive-tools libcap2-bin rsync xz-utils kmod bc
 
 cd "$ROOT_DIR"
 exec bash os/build.sh
