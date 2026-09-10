@@ -27,6 +27,15 @@ fi
 
 sudo apt-get install -y git coreutils quilt parted "$QEMU_PACKAGE" debootstrap zerofree zip dosfstools libarchive-tools libcap2-bin rsync xz-utils kmod bc pigz arch-test
 
+if [[ "$QEMU_PACKAGE" == "qemu-user-binfmt" ]]; then
+    QEMU_ARM="$(command -v qemu-arm || true)"
+    if [[ -z "$QEMU_ARM" ]]; then
+        echo "qemu-user-binfmt installed but qemu-arm was not found."
+        exit 1
+    fi
+    sudo ln -sfn "$QEMU_ARM" /usr/local/bin/qemu-arm-static
+fi
+
 
 cd "$ROOT_DIR"
 exec bash os/build.sh
