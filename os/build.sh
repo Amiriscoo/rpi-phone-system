@@ -39,6 +39,10 @@ mkdir -p "$PI_GEN_DIR/stage-rpi-phone/files/opt/rpi-phone/client"
 cp -a "$ROOT_DIR/client/." "$PI_GEN_DIR/stage-rpi-phone/files/opt/rpi-phone/client/"
 mkdir -p "$OUTPUT_DIR"
 
+if dpkg-query -W -f='${Status}' qemu-user-binfmt 2>/dev/null | grep -q 'install ok installed'; then
+    sed -i 's/^qemu-user-static$/qemu-user-binfmt/' "$PI_GEN_DIR/depends"
+fi
+
 cat > "$PI_GEN_DIR/config" <<CONFIG
 IMG_NAME='pi-phone'
 RELEASE='bookworm'

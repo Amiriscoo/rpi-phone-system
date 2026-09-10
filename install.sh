@@ -21,23 +21,10 @@ else
 fi
 sudo apt-get install -y git coreutils quilt parted "$QEMU_PACKAGE" debootstrap zerofree zip dosfstools libarchive-tools libcap2-bin rsync xz-utils kmod bc pigz arch-test
 
-if [[ "$QEMU_PACKAGE" != "qemu-user-static" ]] && ! dpkg-query -W -f='${Status}' qemu-user-static 2>/dev/null | grep -q 'install ok installed'; then
-    COMPAT_DIR="$(mktemp -d)"
-    mkdir -p "$COMPAT_DIR/DEBIAN"
-    cat > "$COMPAT_DIR/DEBIAN/control" <<CONTROL
-Package: qemu-user-static
-Version: 1:10.2.1-compat
-Section: misc
-Priority: optional
-Architecture: all
-Depends: qemu-user-binfmt
-Description: Compatibility package for pi-gen
- Provides the package name expected by pi-gen; emulation is supplied by qemu-user-binfmt.
-CONTROL
-    dpkg-deb --build "$COMPAT_DIR" "$COMPAT_DIR/qemu-user-static.deb" >/dev/null
-    sudo dpkg -i "$COMPAT_DIR/qemu-user-static.deb" >/dev/null
-    rm -rf "$COMPAT_DIR"
+if [[ "$QEMU_PACKAGE" != "qemu-user-static" ]]; then
+    sudo dpkg --purge qemu-user-static >/dev/null 2>&1 || true
 fi
+
 
 cd "$ROOT_DIR"
 exec bash os/build.sh
