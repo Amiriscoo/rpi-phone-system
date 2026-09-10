@@ -1,0 +1,2 @@
+# PySide6 is installed from Raspberry Pi OS with apt.
+# Keep this file for future client-only Python dependencies.

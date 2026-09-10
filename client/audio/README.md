@@ -1,0 +1,1 @@
+Audio is handled by QtMultimedia on supported Raspberry Pi OS images. Select the USB/Bluetooth microphone and speaker in Raspberry Pi OS audio settings. Calls inside this first release are signaling-ready; PSTN calling requires a SIP provider and a SIP client integration described in the root README.

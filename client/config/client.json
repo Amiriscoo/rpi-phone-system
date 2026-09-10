@@ -1,0 +1,5 @@
+{
+  "server_url": "https://your-vm.your-tailnet.ts.net",
+  "device_name": "Pi Phone",
+  "poll_seconds": 5
+}

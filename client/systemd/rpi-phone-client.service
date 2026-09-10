@@ -1,0 +1,17 @@
+[Unit]
+Description=Pi Phone touchscreen client
+After=graphical-session.target NetworkManager.service
+Wants=NetworkManager.service
+
+[Service]
+Type=simple
+User=pi
+WorkingDirectory=/opt/rpi-phone/client
+Environment=DISPLAY=:0
+Environment=XAUTHORITY=/home/pi/.Xauthority
+ExecStart=/opt/rpi-phone/client/.venv/bin/python /opt/rpi-phone/client/main.py
+Restart=always
+RestartSec=3
+
+[Install]
+WantedBy=graphical.target

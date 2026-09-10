@@ -1,0 +1,11 @@
+server/config/server.env
+server/database/*.db
+client/config/session.json
+client/.venv/
+server/.venv/
+__pycache__/
+client/**/__pycache__/
+client/config/message_queue.json
+os/.pi-gen/
+os/images/
+*.pyc
