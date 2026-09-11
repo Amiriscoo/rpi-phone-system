@@ -114,15 +114,20 @@ class PhoneWindow(QMainWindow):
     def apps_page(self):
         page = QWidget()
         layout = QVBoxLayout(page)
-        layout.addWidget(self.header("Apps", "Open-source Linux apps are installed through Raspberry Pi OS."))
-        catalog = QPushButton("Open Pi-Apps catalog")
-        catalog.clicked.connect(lambda: self.open_url("https://github.com/Botspot/pi-apps"))
-        layout.addWidget(catalog)
+        layout.addWidget(self.header("Apps", "Web apps, Linux apps, and open-source Android catalogs."))
+        for label, url in [
+            ("Pi-Apps Linux catalog", "https://github.com/Botspot/pi-apps"),
+            ("F-Droid Android catalog", "https://f-droid.org/packages/"),
+            ("Aurora Store project", "https://store.auroraoss.com/"),
+        ]:
+            catalog = QPushButton(label)
+            catalog.clicked.connect(lambda checked=False, target=url: self.open_url(target))
+            layout.addWidget(catalog)
         update = QPushButton("Check for Pi Phone updates")
         update.setObjectName("primary")
         update.clicked.connect(lambda: self.update_client())
         layout.addWidget(update)
-        note = QLabel("APK files require Android and cannot run natively on Raspberry Pi OS. Roblox and DRM video support depend on platform and service compatibility.")
+        note = QLabel("Recommended: use Pi-Apps for native Linux software and Chromium for web services. F-Droid and Aurora Store are Android catalogs; their APKs require Android and cannot run natively on this Linux image.")
         note.setWordWrap(True)
         note.setObjectName("status")
         layout.addWidget(note)
