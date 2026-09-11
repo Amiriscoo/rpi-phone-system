@@ -5,3 +5,7 @@ network-manager-gnome
 raspberrypi-ui-mods
 git
 curl
+chromium
+bluez
+blueman
+rfkill

@@ -16,6 +16,8 @@ Optional SIP/WebRTC service and optional PSTN provider
 
 This project is intentionally Wi-Fi-only. Wi-Fi does not provide a cellular number. The included system supports authenticated users, messaging, contacts, device registration, presence-ready WebSocket notifications, local/offline UI, and a call screen. Audio calls need a media service: use WebRTC (recommended for device-to-device calls) or a SIP client/server. Phone-number calling additionally needs a SIP trunk/PSTN provider and costs may apply.
 
+The image includes Chromium and Bluetooth tools. YouTube, TikTok, and Netflix open as web services; DRM, performance, and account support depend on the service and Pi model. APK files are Android packages and do not run natively on Raspberry Pi OS. Roblox does not have a supported native ARM Linux client. Linux applications can be installed through Raspberry Pi OS packages or Pi-Apps. The Apps screen can update the Pi Phone client from GitHub while connected to the Internet; PC-managed updates can also be run over SSH/Tailscale with `sudo /usr/local/bin/pi-phone-update`.
+
 ## Build A Flashable OS
 
 Anyone can build a clean Pi Phone OS image from this repository. The builder asks each person for their own Pi password and does not include Wi-Fi credentials, Tailscale keys, server secrets, or account sessions.

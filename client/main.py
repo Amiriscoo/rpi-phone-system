@@ -6,8 +6,8 @@ from datetime import datetime
 from pathlib import Path
 from urllib.error import URLError, HTTPError
 
-from PySide6.QtCore import QTimer, Qt
-from PySide6.QtGui import QFont, QKeySequence, QShortcut
+from PySide6.QtCore import QTimer, QUrl
+from PySide6.QtGui import QDesktopServices, QFont, QKeySequence, QShortcut
 from PySide6.QtWidgets import QApplication, QComboBox, QGridLayout, QHBoxLayout, QInputDialog, QLabel, QLineEdit, QListWidget, QMainWindow, QMessageBox, QPushButton, QStackedWidget, QTextEdit, QVBoxLayout, QWidget
 
 from networking.api import Api
@@ -36,7 +36,7 @@ class PhoneWindow(QMainWindow):
         """)
         self.stack = QStackedWidget()
         self.pages = {}
-        for name, builder in [("Home", self.home_page), ("Contacts", self.contacts_page), ("Dialer", self.dialer_page), ("Messages", self.messages_page), ("Settings", self.settings_page), ("JARVIS", self.jarvis_page)]:
+        for name, builder in [("Home", self.home_page), ("Browser", self.browser_page), ("Apps", self.apps_page), ("Contacts", self.contacts_page), ("Dialer", self.dialer_page), ("Messages", self.messages_page), ("Settings", self.settings_page), ("JARVIS", self.jarvis_page)]:
             page = builder()
             self.pages[name] = page
             self.stack.addWidget(page)
@@ -54,7 +54,7 @@ class PhoneWindow(QMainWindow):
         self.refresh_status()
 
     def install_shortcuts(self):
-        for key, page in enumerate(["Home", "Contacts", "Dialer", "Messages", "Settings", "JARVIS"], start=1):
+        for key, page in enumerate(["Home", "Browser", "Apps", "Contacts", "Dialer", "Messages", "Settings", "JARVIS"], start=1):
             shortcut = QShortcut(QKeySequence(f"Alt+{key}"), self)
             shortcut.activated.connect(lambda page_name=page: self.show_page(page_name))
         escape = QShortcut(QKeySequence("Escape"), self)
@@ -77,10 +77,10 @@ class PhoneWindow(QMainWindow):
         bar = QWidget()
         grid = QGridLayout(bar)
         grid.setContentsMargins(0, 8, 0, 0)
-        for column, name in enumerate(["Home", "Contacts", "Dialer", "Messages", "Settings", "JARVIS"]):
+        for index, name in enumerate(["Home", "Browser", "Apps", "Contacts", "Dialer", "Messages", "Settings", "JARVIS"]):
             button = QPushButton(name)
             button.clicked.connect(lambda checked=False, n=name: self.show_page(n))
-            grid.addWidget(button, 0, column)
+            grid.addWidget(button, index // 4, index % 4)
         return bar
 
     def show_page(self, name):
@@ -89,6 +89,52 @@ class PhoneWindow(QMainWindow):
             self.load_users()
         if name == "Contacts":
             self.load_contacts()
+
+    def open_url(self, url):
+        QDesktopServices.openUrl(QUrl(url))
+
+    def browser_page(self):
+        page = QWidget()
+        layout = QVBoxLayout(page)
+        layout.addWidget(self.header("Browser", "Chromium opens full web services on the Pi."))
+        address = QLineEdit()
+        address.setPlaceholderText("https://example.com")
+        layout.addWidget(address)
+        open_address = QPushButton("Open website")
+        open_address.setObjectName("primary")
+        open_address.clicked.connect(lambda: self.open_url(address.text().strip()))
+        layout.addWidget(open_address)
+        for label, url in [("YouTube", "https://www.youtube.com"), ("TikTok", "https://www.tiktok.com"), ("Netflix", "https://www.netflix.com"), ("F-Droid catalog", "https://f-droid.org")]:
+            button = QPushButton(label)
+            button.clicked.connect(lambda checked=False, target=url: self.open_url(target))
+            layout.addWidget(button)
+        layout.addStretch()
+        return page
+
+    def apps_page(self):
+        page = QWidget()
+        layout = QVBoxLayout(page)
+        layout.addWidget(self.header("Apps", "Open-source Linux apps are installed through Raspberry Pi OS."))
+        catalog = QPushButton("Open Pi-Apps catalog")
+        catalog.clicked.connect(lambda: self.open_url("https://github.com/Botspot/pi-apps"))
+        layout.addWidget(catalog)
+        update = QPushButton("Check for Pi Phone updates")
+        update.setObjectName("primary")
+        update.clicked.connect(lambda: self.update_client())
+        layout.addWidget(update)
+        note = QLabel("APK files require Android and cannot run natively on Raspberry Pi OS. Roblox and DRM video support depend on platform and service compatibility.")
+        note.setWordWrap(True)
+        note.setObjectName("status")
+        layout.addWidget(note)
+        layout.addStretch()
+        return page
+
+    def update_client(self):
+        try:
+            subprocess.run(["sudo", "/usr/local/bin/pi-phone-update"], check=True, timeout=120)
+            QMessageBox.information(self, "Updated", "Pi Phone software updated. Restart the app to use the new version.")
+        except Exception as error:
+            QMessageBox.warning(self, "Update failed", str(error))
 
     def header(self, title, subtitle):
         widget = QWidget()
