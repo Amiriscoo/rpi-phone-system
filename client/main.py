@@ -123,6 +123,9 @@ class PhoneWindow(QMainWindow):
             catalog = QPushButton(label)
             catalog.clicked.connect(lambda checked=False, target=url: self.open_url(target))
             layout.addWidget(catalog)
+        streaming = QPushButton("Choose streaming web apps")
+        streaming.clicked.connect(self.install_streaming_apps)
+        layout.addWidget(streaming)
         update = QPushButton("Check for Pi Phone updates")
         update.setObjectName("primary")
         update.clicked.connect(lambda: self.update_client())
@@ -133,6 +136,14 @@ class PhoneWindow(QMainWindow):
         layout.addWidget(note)
         layout.addStretch()
         return page
+
+    def install_streaming_apps(self):
+        script = ROOT / "scripts" / "install_streaming_apps.sh"
+        try:
+            subprocess.Popen(["bash", str(script)])
+            QMessageBox.information(self, "Streaming apps", "Choose services in the streaming app picker. They will appear in the Linux application menu.")
+        except Exception as error:
+            QMessageBox.warning(self, "Streaming apps", str(error))
 
     def update_client(self):
         try:

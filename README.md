@@ -18,6 +18,8 @@ This project is intentionally Wi-Fi-only. Wi-Fi does not provide a cellular numb
 
 The image includes Chromium and Bluetooth tools. YouTube, TikTok, and Netflix open as web services; DRM, performance, and account support depend on the service and Pi model. The Apps screen links to Pi-Apps for native Linux software, F-Droid, and the open-source Aurora Store project. F-Droid and Aurora are Android app catalogs, not Linux APK runtimes; their APKs require Android and do not run natively on this image. Roblox does not have a supported native ARM Linux client. The Apps screen can update the Pi Phone client from GitHub while connected to the Internet; PC-managed updates can also be run over SSH/Tailscale with `sudo /usr/local/bin/pi-phone-update`.
 
+The project also adapts the MIT-licensed Handheld Streaming Service Utility idea for Raspberry Pi: the Apps screen can fetch its public service list and create Chromium web-app launchers in the Linux application menu. It does not install Flatpak Chrome or Android APKs.
+
 ## Build A Flashable OS
 
 Anyone can build a clean Pi Phone OS image from this repository. The builder asks each person for their own Pi password and does not include Wi-Fi credentials, Tailscale keys, server secrets, or account sessions.
