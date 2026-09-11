@@ -57,3 +57,7 @@ CONFIG
 echo "Building Pi Phone OS image. The password is supplied only to this local build."
 cd "$PI_GEN_DIR"
 sudo ./build.sh
+
+sudo find "$PI_GEN_DIR/work/pi-phone/export-image" -maxdepth 1 -type f \( -name '*.img' -o -name '*.img.xz' -o -name '*.zip' \) -exec cp -f {} "$OUTPUT_DIR/" \;
+sudo chown -R "$(id -u):$(id -g)" "$OUTPUT_DIR"
+echo "Images copied to: $OUTPUT_DIR"
